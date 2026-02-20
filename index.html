@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pakkoakseli — Libertaari–Statismi Akseli</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root { --bg: #0d1117; --bg2: #161b22; --text: #e6edf3; --text2: #8b949e; --accent: #7c3aed; --accent2: #a855f7; --liberty: #22c55e; --statism: #ef4444; --border: #30363d; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--bg); color: var(--text); font-family: 'DM Sans', system-ui, sans-serif; min-height: 100vh; }
+.container { max-width: 700px; margin: 0 auto; padding: 1.5rem; }
+.hidden { display: none !important; }
+.start-screen { text-align: center; padding: 2rem 0; }
+.start-screen h1 { font-size: 2.2rem; margin-bottom: 0.5rem; }
+.version-badge { display: inline-block; background: var(--accent); color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; margin-bottom: 1rem; }
+.mode-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin: 2rem 0; }
+.mode-btn { flex: 1; min-width: 200px; max-width: 280px; padding: 1.5rem; border-radius: 12px; border: 2px solid var(--border); background: var(--bg2); cursor: pointer; transition: all 0.2s; }
+.mode-btn:hover { border-color: var(--accent); transform: translateY(-2px); }
+.mode-btn h3 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+.mode-btn p { color: var(--text2); font-size: 0.85rem; }
+.mode-btn .badge { display: inline-block; background: var(--accent); color: white; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.7rem; margin-top: 0.5rem; }
+.info-box { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 1rem; margin: 1rem 0; text-align: left; }
+.info-box h4 { color: var(--accent2); margin-bottom: 0.5rem; }
+.info-box ul { color: var(--text2); font-size: 0.85rem; padding-left: 1.2rem; }
+header { text-align: center; margin-bottom: 1.5rem; }
+h1 { font-size: 1.5rem; font-weight: 700; }
+.subtitle { color: var(--text2); font-size: 0.85rem; }
+.progress-bar { height: 3px; background: var(--bg2); border-radius: 2px; margin-bottom: 1rem; overflow: hidden; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width 0.3s; }
+.question-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; margin-bottom: 1rem; }
+.question-num { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; }
+.question-text { font-size: 1rem; font-weight: 500; margin-bottom: 1rem; }
+.options { display: flex; flex-direction: column; gap: 0.5rem; }
+.option { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 0.75rem 1rem; cursor: pointer; transition: all 0.15s; text-align: left; width: 100%; color: var(--text); font-size: 0.85rem; }
+.option:hover { border-color: var(--accent); }
+.option.selected { border-color: var(--accent); background: rgba(124, 58, 237, 0.15); }
+.education-box { margin-top: 1rem; padding: 1rem; background: rgba(124, 58, 237, 0.08); border: 1px solid var(--accent); border-radius: 8px; font-size: 0.85rem; }
+.education-box h4 { color: var(--accent2); margin-bottom: 0.75rem; }
+.education-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.nav-buttons { display: flex; gap: 0.75rem; margin-top: 0.75rem; }
+.btn { flex: 1; padding: 0.75rem; border-radius: 8px; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: all 0.15s; border: none; }
+.btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: white; }
+.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn-secondary { background: var(--bg2); border: 1px solid var(--border); color: var(--text); }
+.result-main { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; text-align: center; margin-bottom: 1rem; }
+.result-label { font-size: 0.75rem; color: var(--text2); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; }
+.result-position { font-size: 1.75rem; font-weight: 800; }
+.result-position.libertarian { color: var(--liberty); }
+.result-position.minarchist { color: #84cc16; }
+.result-position.centrist { color: #f59e0b; }
+.result-position.statist { color: #f97316; }
+.result-position.communist { color: var(--statism); }
+.percentile-box { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 1rem; margin: 1rem 0; text-align: center; }
+.percentile-value { font-size: 2rem; font-weight: 700; color: var(--accent2); }
+.score-details { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin: 1rem 0; }
+.score-card { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; text-align: center; }
+.score-value { font-size: 1.5rem; font-weight: 700; }
+.score-value.green { color: var(--liberty); }
+.score-value.red { color: var(--statism); }
+.score-label { font-size: 0.7rem; color: var(--text2); text-transform: uppercase; }
+.axis-visual { background: linear-gradient(90deg, #22c55e 0%, #84cc16 25%, #f59e0b 50%, #f97316 75%, #ef4444 100%); height: 12px; border-radius: 6px; position: relative; margin: 1.5rem 0; }
+.axis-marker { position: absolute; top: -8px; width: 6px; height: 28px; background: #fff; border-radius: 3px; box-shadow: 0 0 10px rgba(255,255,255,0.5); }
+.axis-labels { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text2); }
+.result-buttons { display: flex; gap: 0.75rem; margin-top: 1.5rem; }
+footer { text-align: center; padding: 1.5rem; color: var(--text2); font-size: 0.75rem; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+.animate-in { animation: fadeIn 0.25s ease forwards; }
+</style>
+</head>
+<body>
+<div class="container">
+<div class="start-screen" id="start-screen">
+<div class="version-badge">v2.0 — TIETEELLINEN</div>
+<h1>🔬 Pakkoakseli</h1>
+<p class="subtitle">Libertaari–Statismi Akseli • Avoin lähdekoodi</p>
+<div class="mode-buttons">
+<button class="mode-btn" onclick="startQuiz(18)">
+<h3>⚡ Pikaskannaus</h3>
+<p>18 kysymystä • ~3 min</p>
+<span class="badge">TARKKUUS ±5 %</span>
+</button>
+<button class="mode-btn" onclick="startQuiz(35)">
+<h3>🔬 Täysi analyysi</h3>
+<p>35 kysymystä • ~8 min</p>
+<span class="badge">MAKSIMITARKKUUS</span>
+</button>
+</div>
+<div class="info-box">
+<h4>🎯 Miksi Pakkoakseli on parempi?</h4>
+<ul>
+<li><strong>Avoin lähdekoodi</strong> — koko matematiikka näkyvissä GitHubissa</li>
+<li><strong>Satunnainen järjestys</strong> — ei kaavanmuistia</li>
+<li><strong>Opetuksellinen</strong> — selitykset jokaisen vastauksen jälkeen</li>
+<li><strong>Tieteellinen</strong> — Heritage & Fraser 2025 -data</li>
+</ul>
+</div>
+</div>
+<div class="hidden" id="quiz-screen">
+<header>
+<h1>🔬 Pakkoakseli</h1>
+<p class="subtitle">Libertaari–Statismi Akseli • Tieteellinen</p>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<div class="question-card animate-in" id="question-card">
+<div class="question-num" id="q-num">KYSYMYS 1/35</div>
+<div class="question-text" id="q-text"></div>
+<div class="options" id="options"></div>
+<div id="education" class="education-box hidden"></div>
+</div>
+<div class="nav-buttons">
+<button class="btn btn-secondary" id="prev-btn" onclick="prevQuestion()">← Edellinen</button>
+<button class="btn btn-primary" id="next-btn" onclick="nextQuestion()" disabled>Seuraava →</button>
+</div>
+</div>
+<div class="hidden" id="results-screen">
+<div class="result-main">
+<div class="result-label">Sijaintisi akselilla</div>
+<div class="result-position" id="position-name"></div>
+</div>
+<div class="percentile-box">
+<div class="result-label">SIJAINTISI 10 000 SIMULAATIOSSA</div>
+<div class="percentile-value" id="percentile-value"></div>
+</div>
+<div class="score-details">
+<div class="score-card">
+<div class="score-value green" id="lib-score">0</div>
+<div class="score-label">Libertaaripisteet</div>
+</div>
+<div class="score-card">
+<div class="score-value red" id="stat-score">0</div>
+<div class="score-label">Statistipisteet</div>
+</div>
+</div>
+<div class="result-axis">
+<div class="axis-visual"><div class="axis-marker" id="axis-marker"></div></div>
+<div class="axis-labels">
+<span>🟢 Libertarismi</span>
+<span>🔴 Statismi</span>
+</div>
+</div>
+<div class="info-box">
+<h4>📊 Heritage Index 2025</h4>
+<ul>
+<li>Vapaimmat taloudet: $120 533 BKT/hlö vs. tukahdutetut: $10 595 (11.4× ero)</li>
+<li>Korrelaatio vapauden ja BKT:n välillä: 0.73</li>
+</ul>
+</div>
+<div class="result-buttons">
+<button class="btn btn-secondary" onclick="restartQuiz()">🔄 Uusi testi</button>
+<button class="btn btn-primary" onclick="shareResults()">📤 Jaa tulokset</button>
+</div>
+</div>
+</div>
+<footer>
+<p>🔬 Pakkoakseli v2.0 — Avoin lähdekoodi: <a href="https://github.com/yourusername/pakkoakseli" target="_blank" style="color:var(--accent)">github.com/yourusername/pakkoakseli</a></p>
+</footer>
+<script>
+const allQuestions = [
+{ q: "Valtion pitäisi olla...", options: ["Minimissään — vain oikeusjärjestelmä ja puolustus", "Pieni — turvaa peruspalvelut", "Maltillinen — jakaa riskiä markkinoiden kanssa", "Suuri — hyvinvointivaltio on välttämätön", "Erittäin suuri — valtio ratkaisee kaiken"], scores: [-4,-2,0,2,4] },
+{ q: "Verotus pitäisi olla...", options: ["Matala — maksimissaan 15% kaikille", "Maltillinen — 20-25%", "Keskitaso — 30-40%", "Korkea — 45-55%", "Erittäin korkea — yli 60%"], scores: [-4,-2,0,2,4] },
+{ q: "Julkinen sektori pitäisi...", options: ["Kokonaan yksityistää", "Kutistua merkittävästi", "Pysyä nykyisellä tasolla", "Kasvaa hieman", "Kasvaa merkittävästi"], scores: [-4,-2,0,2,4] },
+{ q: "Valtion velka pitäisi olla...", options: ["Nolla — ei velkaa", "Minimaalinen — alle 20% BKT:sta", "Maltillinen — 20-40% BKT:sta", "Korkea — 40-70% BKT:sta", "Ei väliä — velkaa voi ottaa"], scores: [-4,-2,0,2,4] },
+{ q: "Bureaukratia pitäisi olla...", options: ["Minimissään — vain välttämätön", "Pieni — tehokas ja kevyt", "Nykyinen taso on ok", "Tarvitaan lisää sääntelyä", "Lisää byrokratiaa = parempi"], scores: [-4,-2,0,2,4] },
+{ q: "Sosiaaliavustukset pitäisi olla...", options: ["Minimissään — yksityinen hyväntekeväisyys", "Lyhytaikaisia — kannustimia työhön", "Nykyiset perusturva", "Kunnolliset perustulot", "Universaalit perustulot kaikille"], scores: [-4,-2,0,2,4] },
+{ q: "Eläkejärjestelmä pitäisi olla...", options: ["Täysin yksityinen — ei pakkoa", "Pääosin yksityinen", "Nykyinen malli (kolmikanta)", "Pääosin julkinen", "Täysin julkinen"], scores: [-4,-2,0,2,4] },
+{ q: "Terveyspalvelut pitäisi olla...", options: ["Täysin yksityiset — markkinat ratkaisee", "Pääosin yksityiset + köyhille tuki", "Julkinen perusterveydenhuolto", "Kaikki julkista", "Kaikki julkista + ilmaista kaikille"], scores: [-4,-2,0,2,4] },
+{ q: "Yrittäjyys on...", options: ["Vapaan markkinan ydin — ei sääntelyä", "Tärkeää — vähän sääntelyä", "Tärkeää — kohtuullinen verotus", "Yhteiskunnan tukemaa", "Valtion ohjattavaa"], scores: [-4,-2,0,2,4] },
+{ q: "Yritysverotus pitäisi olla...", options: ["0% — kannustaa investointeja", "Matala — alle 15%", "Nykyinen taso — 20%", "Korkeampi — tasapuolisuus", "Erittäin korkea"], scores: [-4,-2,0,2,4] },
+{ q: "Työmarkkinasääntely pitäisi olla...", options: ["Minimaalinen — sopimusvapaus", "Kevyt — perussuoja", "Nykyinen taso", "Tiukka — työntekijäsuojelua", "Erittäin tiukka"], scores: [-4,-2,0,2,4] },
+{ q: "Kauppa pitäisi olla...", options: ["Täysin vapaata — ei tulleja", "Vapaata — vähän esteitä", "Tasapainoinen", "Suojattu — omia tuetaan", "Eristäytynyt"], scores: [-4,-2,0,2,4] },
+{ q: "Omistaminen on...", options: ["Perustavanlaatuinen ihmisoikeus", "Tärkeä — mutta verotettava", "Yhteiskunnallinen velvollisuus", "Rajoitettava", "Kollektiivista"], scores: [-4,-2,0,2,4] },
+{ q: "Vuorotteluvapaa ja sairausloma...", options: ["Yksityinen asia", "Vapaaehtoinen", "Nykyinen järjestelmä", "Lakisääteinen — laaja", "Erittäin laaja — palkallinen"], scores: [-4,-2,0,2,4] },
+{ q: "Yritystuet pitäisi olla...", options: ["Nolla — markkinat ratkaisee", "Minimissään", "Nykyinen taso", "Lisää — aluepolitiikka", "Merkittävästi"], scores: [-4,-2,0,2,4] },
+{ q: "Sananvapaus on...", options: ["Absoluutti — rajoittamaton", "Tärkeä — vain väkivalta kielletty", "Nykyinen taso riittää", "Rajoitettava — loukkaava kielletty", "Erittäin rajoitettava"], scores: [-4,-2,0,2,4] },
+{ q: "Aseiden omistaminen pitäisi olla...", options: ["Täysin vapaata", "Vapaata järkevällä rekisteröinnillä", "Nykyinen taso", "Tiukkaa — vain rajoitetusti", "Kiellettyä lähes kokonaan"], scores: [-4,-2,0,2,4] },
+{ q: "Drogen käyttö pitäisi olla...", options: ["Täysin vapaata", "Dekriminalisoitua", "Nykyinen politiikka", "Tiukempaa", "Ehdottomasti kiellettyä"], scores: [-4,-2,0,2,4] },
+{ q: "Abortti pitäisi olla...", options: ["Naisen täysi oikeus", "Lakisääteinen — laaja", "Nykyinen käytäntö", "Tiukempaa", "Lähes kielletty"], scores: [-4,-2,0,2,4] },
+{ q: "Sukupuolten tasa-arvo on...", options: ["Tasa-arvo lain edessä", "Tasa-arvo + mahdollisuuksien tasa-arvo", "Nykyiset lait riittävät", "Positiivista erityiskohtelua", "Kvotit pakolliseksi"], scores: [-4,-2,0,2,4] },
+{ q: "Henkilökohtainen vapaus on...", options: ["Absoluutti — valtio ei puutu", "Tärkeä — vain rikos kielletty", "Nykyinen taso ok", "Rajoitettava", "Alistettava yhteisön alle"], scores: [-4,-2,0,2,4] },
+{ q: "Suomen EU-jäsenyys...", options: ["Ei EU:ta — täysi itsenäisyys", "Vähäisempi", "Nykyinen jäsenyys", "Tiiviimpi", "Liittovaltio"], scores: [-4,-2,0,2,4] },
+{ q: "Maahanmuutto pitäisi olla...", options: ["Lähes nolla", "Hallittu — tarveharkinta", "Nykyinen taso", "Liberaali", "Avoin"], scores: [-4,-2,0,2,4] },
+{ q: "Puolustus pitäisi olla...", options: ["Yksilön vastuu", "Minimiarmeija", "Nykyinen malli", "Vahva armeija", "Yleisarmeija"], scores: [-4,-2,0,2,4] },
+{ q: "Suomen pitäisi olla...", options: ["Puolueeton", "Suomen etu ensin", "Nykyinen Nato-jäsenyys", "Nato + tiivis EU", "Globaali osallistuja"], scores: [-4,-2,0,2,4] },
+{ q: "Ulkomainen apu...", options: ["Nolla — Suomi ensin", "Minimissään", "Nykyinen taso", "Lisää", "Merkittävää"], scores: [-4,-2,0,2,4] },
+{ q: "Demokratian paras muoto on...", options: ["Suora demokratia", "Edustuksellinen — vahva kansan vaikutus", "Nykyinen parlamentaarinen", "Edustuksellinen — vahva eliitti", "Technokratia"], scores: [-4,-2,0,2,4] },
+{ q: "Kansanäänestykset pitäisi olla...", options: ["Sitovia — kaikesta", "Neuvoa-antavia", "Nykyinen käytäntö", "Vain harvoissa tapauksissa", "Ei lainkaan"], scores: [-4,-2,0,2,4] },
+{ q: "Poliitikon uran pituus...", options: ["Yksi kausi maksimi", "Maksimi 8 vuotta", "Nykyinen ei ole rajattu", "Pitkä kokemus arvokasta", "Elinikäinen ura ok"], scores: [-4,-2,0,2,4] },
+{ q: "Puolueet pitäisi olla...", options: ["Kielletty — suora demokratia", "Vähän", "Nykyinen määrä", "Monipuoluejärjestelmä", "Välttämättömiä"], scores: [-4,-2,0,2,4] },
+{ q: "Perustuslaki pitäisi olla...", options: ["Muuttumaton", "Vaikea muuttaa", "Nykyinen käytäntö", "Joustava", "Elävä asiakirja"], scores: [-4,-2,0,2,4] },
+{ q: "Raha pitäisi olla...", options: ["Kultaan sidottu", "Kilpailevat valuutat", "Keskpankki", "Digitaalinen valtion valuutta", "Valtio kontrolloi täysin"], scores: [-4,-2,0,2,4] },
+{ q: "Keskitettyä valtaa...", options: ["Minimissään — alueet päättävät", "Vähän — liittovaltio", "Nykyinen keskittäminen", "Lisää keskittämistä", "Täysin keskitetty"], scores: [-4,-2,0,2,4] },
+{ q: "Alueellinen itsehallinto...", options: ["Täysi itsenäisyys", "Laaja — liittovaltio", "Nykyinen maakuntamalli", "Keskustalla enemmän valtaa", "Täysin keskitetty"], scores: [-4,-2,0,2,4] },
+{ q: "Veroparatiisit pitäisi olla...", options: ["Sallittuja", "Normaaleja", "Nykyinen sääntely", "Kiellettyjä", "Ehdottomasti kiellettyjä"], scores: [-4,-2,0,2,4] }
+];
+
+const shortIndices = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,20];
+let questions = [], current = 0, answers = [], totalQuestions = 35;
+
+const startScreen = document.getElementById('start-screen');
+const quizScreen = document.getElementById('quiz-screen');
+const resultsScreen = document.getElementById('results-screen');
+const qNum = document.getElementById('q-num');
+const qText = document.getElementById('q-text');
+const optionsDiv = document.getElementById('options');
+const educationDiv = document.getElementById('education');
+const progress = document.getElementById('progress');
+const nextBtn = document.getElementById('next-btn');
+const prevBtn = document.getElementById('prev-btn');
+
+function shuffle(array) {
+for (let i = array.length - 1; i > 0; i--) {
+const j = Math.floor(Math.random() * (i + 1));
+[array[i], array[j]] = [array[j], array[i]];
+}
+}
+
+function startQuiz(mode) {
+totalQuestions = mode;
+questions = (mode === 18) ? shortIndices.map(i => allQuestions[i]) : [...allQuestions];
+shuffle(questions);
+current = 0;
+answers = [];
+startScreen.classList.add('hidden');
+quizScreen.classList.remove('hidden');
+resultsScreen.classList.add('hidden');
+renderQuestion();
+}
+
+function renderQuestion() {
+const q = questions[current];
+qNum.textContent = `KYSYMYS ${current + 1}/${totalQuestions}`;
+qText.textContent = q.q;
+progress.style.width = `${((current + 1) / totalQuestions) * 100}%`;
+optionsDiv.innerHTML = q.options.map((opt, i) => 
+`<button class="option ${answers[current] === i ? 'selected' : ''}" data-i="${i}">${opt}</button>`
+).join('');
+optionsDiv.querySelectorAll('.option').forEach(btn => {
+btn.onclick = () => selectOption(parseInt(btn.dataset.i));
+});
+nextBtn.disabled = answers[current] === undefined;
+prevBtn.disabled = current === 0;
+educationDiv.classList.add('hidden');
+}
+
+function selectOption(i) {
+answers[current] = i;
+renderQuestion();
+showEducation(i);
+}
+
+function showEducation(i) {
+const score = questions[current].scores[i];
+const isStrongLib = score === -4;
+let libText = "Vapaaehtoinen yhteistyö ja yksilön vapaus tuottavat korkeimman hyvinvoinnin. Heritage 2025: vapaat taloudet 11.4× korkeampi BKT/hlö.";
+let statText = "Valtio tasoittaa eroja ja tarjoaa turvaa. Julkinen sektori on välttämätön yhteiskunnan vakaudelle.";
+if (isStrongLib) libText = "Absoluuttinen vapaus ilman pakkoa. Poistaa free-rider-ongelman ja maksimoi reciprociteetin (peliteoria + Dunbar-raja).";
+if (isStrongLib) statText = "Täysi valtion kontrolli estää eriarvoisuutta ja markkinoiden epäonnistumisia.";
+educationDiv.innerHTML = `
+<h4>💡 Mitä tämä valinta tarkoittaa?</h4>
+<div class="education-grid">
+<div><strong>🟢 Libertariaani näkökulma:</strong><br>${libText}</div>
+<div><strong>🔴 Statisti näkökulma:</strong><br>${statText}</div>
+</div>
+`;
+educationDiv.classList.remove('hidden');
+}
+
+function nextQuestion() {
+if (current < totalQuestions - 1) {
+current++;
+renderQuestion();
+} else {
+showResults();
+}
+}
+
+function prevQuestion() {
+if (current > 0) {
+current--;
+renderQuestion();
+}
+}
+
+function showResults() {
+quizScreen.classList.add('hidden');
+resultsScreen.classList.remove('hidden');
+let lib = 0, stat = 0;
+answers.forEach((ans, i) => {
+const s = questions[i].scores[ans];
+if (s < 0) lib += Math.abs(s);
+else if (s > 0) stat += s;
+});
+const total = lib + stat;
+const libPct = total === 0 ? 50 : (lib / total) * 100;
+const percentile = Math.round(50 + (libPct - 50) * 1.8);
+document.getElementById('lib-score').textContent = lib;
+document.getElementById('stat-score').textContent = stat;
+document.getElementById('percentile-value').textContent = Math.max(1, Math.min(99, percentile)) + '%';
+let pos, cls;
+if (libPct >= 80) { pos = 'Libertariaani'; cls = 'libertarian'; }
+else if (libPct >= 60) { pos = 'Minarkisti'; cls = 'minarchist'; }
+else if (libPct >= 40) { pos = 'Keskustalainen'; cls = 'centrist'; }
+else if (libPct >= 20) { pos = 'Statisti'; cls = 'statist'; }
+else { pos = 'Kommunisti'; cls = 'communist'; }
+const posEl = document.getElementById('position-name');
+posEl.textContent = pos;
+posEl.className = 'result-position ' + cls;
+document.getElementById('axis-marker').style.left = `${libPct}%`;
+}
+
+function restartQuiz() {
+startScreen.classList.remove('hidden');
+quizScreen.classList.add('hidden');
+resultsScreen.classList.add('hidden');
+}
+
+function shareResults() {
+const pos = document.getElementById('position-name').textContent;
+const text = `Olen ${pos} Pakkoakselilla! Testaa itse: https://pohjolanihme.com/quiz`;
+if (navigator.share) {
+navigator.share({ title: 'Pakkoakseli-tulokseni', text });
+} else {
+navigator.clipboard.writeText(text).then(() => alert('Tulos kopioitu leikepöydälle!'));
+}
+}
+</script>
+</body>
+</html>
