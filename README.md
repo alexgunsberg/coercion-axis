@@ -39,3 +39,18 @@ This project exists so the model, math, and scoring logic are inspectable and fo
 
 ## License
 MIT (`LICENSE`)
+
+## Sync from site quiz source
+
+To keep this open-source repo aligned with the live site question bank, run:
+
+```bash
+/Users/alexgunsberg/.openclaw/workspace/projects/pakkoakseli/scripts/sync-from-pohjolanihme.sh
+```
+
+This sync updates:
+- `const allQuestions = [...]`
+- `const shortIndices = [...]`
+
+Source file used by default:
+- `/Users/alexgunsberg/Library/CloudStorage/ProtonDrive-alex.gunsberg@proton.me-folder/pohjolanihme_website_v01/layouts/tool/quiz.html`
