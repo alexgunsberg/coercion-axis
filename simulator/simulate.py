@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Pakkoakseli - Simulator
+Coercion Axis - Simulator
 A tool to run simulations on the Coercion Axis scoring algorithm.
 """
 
@@ -8,7 +8,7 @@ import random
 
 def calculate_score(scores):
     """
-    Calculates the Pakkoakseli score based on an array of 35 answers.
+    Calculates the Coercion Axis score based on an array of 35 answers.
     Each answer is in [-4, -2, 0, 2, 4].
     Negative = Libertarian / Freedom
     Positive = Statist / Coercion
@@ -49,7 +49,7 @@ def simulate_random_users(count=10000):
     print(f"Neutral: {neutral} ({(neutral/count)*100:.1f}%)")
 
 def main():
-    print("=== Pakkoakseli Simulator ===")
+    print("=== Coercion Axis Simulator ===")
     
     # Example 1: Perfect Libertarian
     scores_lib = [-4] * 35

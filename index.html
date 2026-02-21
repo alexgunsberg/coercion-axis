@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="fi">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pakkoakseli — Libertaari–Statismi Akseli</title>
+<title>Coercion Axis — Liberty-Statism Axis</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root { --bg: #0d1117; --bg2: #161b22; --text: #e6edf3; --text2: #8b949e; --accent: #7c3aed; --accent2: #a855f7; --liberty: #22c55e; --statism: #ef4444; --border: #30363d; }
@@ -71,89 +71,90 @@ footer { text-align: center; padding: 1.5rem; color: var(--text2); font-size: 0.
 <body>
 <div class="container">
 <div class="start-screen" id="start-screen">
-<div class="version-badge">v2.0 — TIETEELLINEN</div>
-<h1>🔬 Pakkoakseli</h1>
-<p class="subtitle">Libertaari–Statismi Akseli • Avoin lähdekoodi</p>
+<div class="version-badge">v2.0 — SCIENTIFIC</div>
+<h1>🔬 Coercion Axis</h1>
+<p class="subtitle">Liberty-Statism Axis • Open source</p>
+<p class="subtitle">Question wording currently in Finnish. English translation in progress.</p>
 <div class="mode-buttons">
 <button class="mode-btn" onclick="startQuiz(18)">
-<h3>⚡ Pikaskannaus</h3>
-<p>18 kysymystä • ~3 min</p>
-<span class="badge">TARKKUUS ±5 %</span>
+<h3>⚡ Quick Scan</h3>
+<p>18 questions • ~3 min</p>
+<span class="badge">ACCURACY ±5%</span>
 </button>
 <button class="mode-btn" onclick="startQuiz(35)">
-<h3>🔬 Täysi analyysi</h3>
-<p>35 kysymystä • ~8 min</p>
-<span class="badge">MAKSIMITARKKUUS</span>
+<h3>🔬 Full Analysis</h3>
+<p>35 questions • ~8 min</p>
+<span class="badge">MAXIMUM ACCURACY</span>
 </button>
 </div>
 <div class="info-box">
-<h4>🎯 Miksi Pakkoakseli on parempi?</h4>
+<h4>🎯 Why Coercion Axis is different?</h4>
 <ul>
-<li><strong>Avoin lähdekoodi</strong> — koko matematiikka näkyvissä GitHubissa</li>
-<li><strong>Satunnainen järjestys</strong> — ei kaavanmuistia</li>
-<li><strong>Opetuksellinen</strong> — selitykset jokaisen vastauksen jälkeen</li>
-<li><strong>Tieteellinen</strong> — Heritage & Fraser 2025 -data</li>
+<li><strong>Open source</strong> — full scoring logic is visible on GitHub</li>
+<li><strong>Randomized order</strong> — reduces answer-pattern gaming</li>
+<li><strong>Educational</strong> — explanations after each answer</li>
+<li><strong>Evidence-based</strong> — Heritage & Fraser 2025 data</li>
 </ul>
 </div>
 </div>
 <div class="hidden" id="quiz-screen">
 <header>
-<h1>🔬 Pakkoakseli</h1>
-<p class="subtitle">Libertaari–Statismi Akseli • Tieteellinen</p>
+<h1>🔬 Coercion Axis</h1>
+<p class="subtitle">Liberty-Statism Axis • Scientific</p>
 </header>
 <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
 <div class="question-card animate-in" id="question-card">
-<div class="question-num" id="q-num">KYSYMYS 1/35</div>
+<div class="question-num" id="q-num">QUESTION 1/35</div>
 <div class="question-text" id="q-text"></div>
 <div class="options" id="options"></div>
 <div id="education" class="education-box hidden"></div>
 </div>
 <div class="nav-buttons">
-<button class="btn btn-secondary" id="prev-btn" onclick="prevQuestion()">← Edellinen</button>
-<button class="btn btn-primary" id="next-btn" onclick="nextQuestion()" disabled>Seuraava →</button>
+<button class="btn btn-secondary" id="prev-btn" onclick="prevQuestion()">← Previous</button>
+<button class="btn btn-primary" id="next-btn" onclick="nextQuestion()" disabled>Next →</button>
 </div>
 </div>
 <div class="hidden" id="results-screen">
 <div class="result-main">
-<div class="result-label">Sijaintisi akselilla</div>
+<div class="result-label">Your position on the axis</div>
 <div class="result-position" id="position-name"></div>
 </div>
 <div class="percentile-box">
-<div class="result-label">SIJAINTISI 10 000 SIMULAATIOSSA</div>
+<div class="result-label">YOUR POSITION IN 10,000 SIMULATIONS</div>
 <div class="percentile-value" id="percentile-value"></div>
 </div>
 <div class="score-details">
 <div class="score-card">
 <div class="score-value green" id="lib-score">0</div>
-<div class="score-label">Libertaaripisteet</div>
+<div class="score-label">Liberty score</div>
 </div>
 <div class="score-card">
 <div class="score-value red" id="stat-score">0</div>
-<div class="score-label">Statistipisteet</div>
+<div class="score-label">Statism score</div>
 </div>
 </div>
 <div class="result-axis">
 <div class="axis-visual"><div class="axis-marker" id="axis-marker"></div></div>
 <div class="axis-labels">
-<span>🟢 Libertarismi</span>
-<span>🔴 Statismi</span>
+<span>🟢 Libertarian</span>
+<span>🔴 Statist</span>
 </div>
 </div>
 <div class="info-box">
 <h4>📊 Heritage Index 2025</h4>
 <ul>
-<li>Vapaimmat taloudet: $120 533 BKT/hlö vs. tukahdutetut: $10 595 (11.4× ero)</li>
-<li>Korrelaatio vapauden ja BKT:n välillä: 0.73</li>
+<li>Freest economies: $120,533 GDP/capita vs. repressed: $10,595 (11.4x gap)</li>
+<li>Correlation between freedom and GDP: 0.73</li>
 </ul>
 </div>
 <div class="result-buttons">
-<button class="btn btn-secondary" onclick="restartQuiz()">🔄 Uusi testi</button>
-<button class="btn btn-primary" onclick="shareResults()">📤 Jaa tulokset</button>
+<button class="btn btn-secondary" onclick="restartQuiz()">🔄 New test</button>
+<button class="btn btn-primary" onclick="shareResults()">📤 Share results</button>
 </div>
 </div>
 </div>
 <footer>
-<p>🔬 Pakkoakseli v2.0 — Avoin lähdekoodi: <a href="https://github.com/yourusername/pakkoakseli" target="_blank" style="color:var(--accent)">github.com/yourusername/pakkoakseli</a></p>
+<p>🔬 Coercion Axis v2.0 — Open source: <a href="https://github.com/alexgunsberg/coercion-axis" target="_blank" style="color:var(--accent)">github.com/alexgunsberg/coercion-axis</a></p>
 </footer>
 <script>
 const allQuestions = [
@@ -209,27 +210,29 @@ const nextBtn = document.getElementById('next-btn');
 const prevBtn = document.getElementById('prev-btn');
 
 function shuffle(array) {
-for (let i = array.length - 1; i > 0; i--) {
-const j = Math.floor(Math.random() * (i + 1));
-[array[i], array[j]] = [array[j], array[i]];
-}
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
 }
 
 function startQuiz(mode) {
-totalQuestions = mode;
-questions = (mode === 18) ? shortIndices.map(i => allQuestions[i]) : [...allQuestions];
-shuffle(questions);
-current = 0;
-answers = [];
-startScreen.classList.add('hidden');
-quizScreen.classList.remove('hidden');
-resultsScreen.classList.add('hidden');
-renderQuestion();
+  totalQuestions = mode;
+  // Create a deep copy of the questions
+  let selected = (mode === 18) ? shortIndices.map(i => ({...allQuestions[i]})) : allQuestions.map(q => ({...q}));
+  questions = shuffle(selected);
+  current = 0;
+  answers = [];
+  startScreen.classList.add('hidden');
+  quizScreen.classList.remove('hidden');
+  resultsScreen.classList.add('hidden');
+  renderQuestion();
 }
 
 function renderQuestion() {
 const q = questions[current];
-qNum.textContent = `KYSYMYS ${current + 1}/${totalQuestions}`;
+qNum.textContent = `QUESTION ${current + 1}/${totalQuestions}`;
 qText.textContent = q.q;
 progress.style.width = `${((current + 1) / totalQuestions) * 100}%`;
 optionsDiv.innerHTML = q.options.map((opt, i) => 
@@ -252,15 +255,15 @@ showEducation(i);
 function showEducation(i) {
 const score = questions[current].scores[i];
 const isStrongLib = score === -4;
-let libText = "Vapaaehtoinen yhteistyö ja yksilön vapaus tuottavat korkeimman hyvinvoinnin. Heritage 2025: vapaat taloudet 11.4× korkeampi BKT/hlö.";
-let statText = "Valtio tasoittaa eroja ja tarjoaa turvaa. Julkinen sektori on välttämätön yhteiskunnan vakaudelle.";
-if (isStrongLib) libText = "Absoluuttinen vapaus ilman pakkoa. Poistaa free-rider-ongelman ja maksimoi reciprociteetin (peliteoria + Dunbar-raja).";
-if (isStrongLib) statText = "Täysi valtion kontrolli estää eriarvoisuutta ja markkinoiden epäonnistumisia.";
+let libText = "Voluntary cooperation and individual freedom are associated with stronger prosperity outcomes. Heritage 2025: freer economies show 11.4x higher GDP per capita.";
+let statText = "The state can reduce inequality and provide social stability. Public institutions are viewed as essential safeguards.";
+if (isStrongLib) libText = "Maximum freedom minimizes forced transfers and may strengthen voluntary reciprocity dynamics.";
+if (isStrongLib) statText = "Maximum state control aims to reduce inequality and market failures through centralized policy.";
 educationDiv.innerHTML = `
-<h4>💡 Mitä tämä valinta tarkoittaa?</h4>
+<h4>💡 What does this choice imply?</h4>
 <div class="education-grid">
-<div><strong>🟢 Libertariaani näkökulma:</strong><br>${libText}</div>
-<div><strong>🔴 Statisti näkökulma:</strong><br>${statText}</div>
+<div><strong>🟢 Libertarian perspective:</strong><br>${libText}</div>
+<div><strong>🔴 Statist perspective:</strong><br>${statText}</div>
 </div>
 `;
 educationDiv.classList.remove('hidden');
@@ -298,11 +301,11 @@ document.getElementById('lib-score').textContent = lib;
 document.getElementById('stat-score').textContent = stat;
 document.getElementById('percentile-value').textContent = Math.max(1, Math.min(99, percentile)) + '%';
 let pos, cls;
-if (libPct >= 80) { pos = 'Libertariaani'; cls = 'libertarian'; }
-else if (libPct >= 60) { pos = 'Minarkisti'; cls = 'minarchist'; }
-else if (libPct >= 40) { pos = 'Keskustalainen'; cls = 'centrist'; }
-else if (libPct >= 20) { pos = 'Statisti'; cls = 'statist'; }
-else { pos = 'Kommunisti'; cls = 'communist'; }
+if (libPct >= 80) { pos = 'Libertarian'; cls = 'libertarian'; }
+else if (libPct >= 60) { pos = 'Minarchist'; cls = 'minarchist'; }
+else if (libPct >= 40) { pos = 'Centrist'; cls = 'centrist'; }
+else if (libPct >= 20) { pos = 'Statist'; cls = 'statist'; }
+else { pos = 'Communist'; cls = 'communist'; }
 const posEl = document.getElementById('position-name');
 posEl.textContent = pos;
 posEl.className = 'result-position ' + cls;
@@ -317,11 +320,11 @@ resultsScreen.classList.add('hidden');
 
 function shareResults() {
 const pos = document.getElementById('position-name').textContent;
-const text = `Olen ${pos} Pakkoakselilla! Testaa itse: https://pohjolanihme.com/quiz`;
+const text = `I scored as ${pos} on the Coercion Axis. Try it: https://pohjolanihme.com/quiz`;
 if (navigator.share) {
-navigator.share({ title: 'Pakkoakseli-tulokseni', text });
+navigator.share({ title: 'My Coercion Axis result', text });
 } else {
-navigator.clipboard.writeText(text).then(() => alert('Tulos kopioitu leikepöydälle!'));
+navigator.clipboard.writeText(text).then(() => alert('Result copied to clipboard!'));
 }
 }
 </script>
